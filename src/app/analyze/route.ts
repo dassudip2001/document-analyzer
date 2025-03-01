@@ -40,13 +40,13 @@ export async function POST(request: NextRequest) {
 
 async function summarizeWithGemini(text: string) {
   try {
-    // 1. Configure Gemini (API key)
+    // Configure Gemini (API key)
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
 
-    // 2. Select the model
+    // Select the model
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-    // 3. Construct the prompt
+    // Construct the prompt
     const prompt = `
       Please summarize this document in clear, concise bullet points. 
       Focus on key findings, main arguments, and critical data.
@@ -55,12 +55,12 @@ async function summarizeWithGemini(text: string) {
       ${text}
     `;
 
-    // 4. Make the API call
+    // Make the API call
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const summary = response.text();
 
-    // 5. Return the summary
+    // Return the summary
     return summary;
   } catch (error) {
     console.error("Failed to generate summary:", error);
