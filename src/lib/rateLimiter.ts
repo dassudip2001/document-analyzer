@@ -12,7 +12,7 @@ export const reteLimit = async (req: NextRequest) => {
   const currentCount = (rateLimitCache.get(ip) || 0) as number;
 
   if (currentCount >= limit) {
-    throw new Error("Rate limit exceeded");
+    throw new Response("Too many requests", { status: 429 });
   }
 
   rateLimitCache.set(ip, currentCount + 1);
